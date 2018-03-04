@@ -1,4 +1,4 @@
-package rfbujan.backend_taks1.model;
+package rfbujan.backend.task2.common.model;
 
 /**
  * Credentials - A tuple of username and password that are used to authenticate
@@ -9,15 +9,29 @@ package rfbujan.backend_taks1.model;
  */
 public class Credentials
 {
-    public final String username;
-    public final String password;
-
+    private final String username;
+    private final String password;
+    
     public Credentials(String username, String password)
     {
 	super();
 	this.username = username;
 	this.password = password;
+	
     }
+    
+    
+    public String getUsername()
+    {
+        return username;
+    }
+
+
+    public String getPassword()
+    {
+        return password;
+    }
+
 
     @Override
     public int hashCode()
@@ -29,12 +43,6 @@ public class Credentials
 	return result;
     }
 
-    /**
-     * Another object is considered equal to a UserToken object if it is an
-     * instance of UserToken and all attributes (i.e. password and name) are
-     * equals among each other.
-     * <p>
-     */
     @Override
     public boolean equals(Object obj)
     {
@@ -60,4 +68,5 @@ public class Credentials
 	return true;
     }
 
+    
 }

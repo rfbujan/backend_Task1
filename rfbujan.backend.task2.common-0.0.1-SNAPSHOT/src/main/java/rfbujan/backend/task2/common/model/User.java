@@ -1,4 +1,4 @@
-package rfbujan.backend_taks1.model;
+package rfbujan.backend.task2.common.model;
 
 /**
  * User - Identifies a given customer within the system. For simplicity, it just
@@ -9,7 +9,9 @@ package rfbujan.backend_taks1.model;
  */
 public class User
 {
-    public final String userId;
+    private final String userId;
+    
+    public final static String INVALID = "invalid";
 
     public User(String userId)
     {
@@ -17,7 +19,21 @@ public class User
 	this.userId = userId;
     }
 
+    
+    public String getUserId()
+    {
+        return userId;
+    }
 
+    public static final User invalidUser()
+    {
+	return new User(INVALID);
+    }
+
+    public boolean startsWithA()
+    {
+	return userId.startsWith("A");
+    }
     @Override
     public int hashCode()
     {

@@ -56,7 +56,6 @@ public class TokenProviderTask1 implements TokenProvider
     {
 	User user = tokenAuthenticator.authenticate(credentials);
 	return tokenCreator.issueToken(user);
-
     }
 
     protected static UserToken createInvalidUserToken()

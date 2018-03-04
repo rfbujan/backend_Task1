@@ -1,4 +1,8 @@
-package rfbujan.backend_taks1.model;
+package rfbujan.backend.task2.common.model;
+
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * UserToken - Token granted to a user in order to perform further operations in
@@ -10,14 +14,31 @@ package rfbujan.backend_taks1.model;
  */
 public class UserToken
 {
-    public final String token;
+    private final String token;
+    public final static String INVALID = "invalid";
 
-    public UserToken(String token)
+    public UserToken(String userId)
     {
 	super();
-	this.token = token;
+	this.token = generateTokenWithUTC(userId);
     }
 
+    public static final UserToken invalidUserToken()
+    {
+	return new UserToken(INVALID);
+    }
+    
+    public String getToken()
+    {
+        return token;
+    }
+
+
+    private String generateTokenWithUTC(String userId)
+    {
+	String utc = ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT);
+	return userId+utc;
+    }
 
     @Override
     public int hashCode()
@@ -27,6 +48,7 @@ public class UserToken
 	result = prime * result + ((token == null) ? 0 : token.hashCode());
 	return result;
     }
+    
     /**
      * Another object is considered equal to a UserToken object if it is an
      * instance of UserToken and all attributes (i.e. token) are
