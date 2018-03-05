@@ -14,22 +14,22 @@ public class TokenCreatorWithRandomDelay implements TokenCreator
     @Override
     public CompletableFuture<UserToken> issueTokenAsync(User user)
     {
-	return CompletableFuture.supplyAsync(() ->
-	{
-	    return issueToken(user);
-	});
+		return CompletableFuture.supplyAsync(() ->
+		{
+		    return issueToken(user);
+		});
     }
 
     private UserToken issueToken(User user)
     {
-	randomDelay();
-	if (user.startsWithA())
-	{
-	    return UserToken.invalidUserToken();
-	} else
-	{
-	    return new UserToken(user.getUserId());
-	}
+		randomDelay();
+		if (user.startsWithA())
+		{
+		    return UserToken.invalidUserToken();
+		} else
+		{
+		    return new UserToken(user.getUserId());
+		}
     }
 
 }

@@ -21,7 +21,7 @@ import rfbujan.backend.task2.common.model.User;
 import rfbujan.backend.task2.common.model.UserToken;
 import rfbujan.backend.task2.common.token.creator.TokenCreator;
 
-public class SimpleAsyncTokenServiceTest
+public class SimpleAsyncTokenServiceExceptionTest
 {
 
     @Mock
@@ -33,7 +33,13 @@ public class SimpleAsyncTokenServiceTest
 
     // create test data
     Credentials dummyCredetials = new Credentials("dummyUser", "dummyPassword");
+    Credentials dummyExceptionCredetials = new Credentials("dummyExceptionUser", "dummyExceptionPassword");
     String dummyTokenString = "dummyToken";
+    
+    CompletableFuture<User> dummyExceptionUser = CompletableFuture.supplyAsync(() ->
+    {
+	throw new RuntimeException();
+    });
     
     CompletableFuture<User> dummyUser = CompletableFuture.supplyAsync(() ->
     {
@@ -43,22 +49,14 @@ public class SimpleAsyncTokenServiceTest
 
 	} catch (InterruptedException e)
 	{
-	    fail("not exception is expected at this point");
+	   fail("not exception is expected at this point");
 	}
 	return new User(dummyTokenString);
     });
     
     CompletableFuture<UserToken> dummyToken = CompletableFuture.supplyAsync(() ->
     {
-	try
-	{
-	    Thread.sleep(2000);
-
-	} catch (InterruptedException e)
-	{
-	    fail("not exception is expected at this point");
-	}
-	return new UserToken(dummyTokenString);
+	throw new RuntimeException();
     });
 
     @Before
@@ -69,6 +67,7 @@ public class SimpleAsyncTokenServiceTest
 	// Stubbing the methods of the mocked objects
 	// nominal case
 	when(mockedTokenAuthenticator.authenticateAsync(dummyCredetials)).thenReturn(dummyUser);
+	when(mockedTokenAuthenticator.authenticateAsync(dummyExceptionCredetials)).thenReturn(dummyExceptionUser);
 	when(mokedTokenCreator.issueTokenAsync(any(User.class))).thenReturn(dummyToken);
     }
 
@@ -80,17 +79,14 @@ public class SimpleAsyncTokenServiceTest
     {
 	
 	UserToken token = tokenProviderToTest.requestTokenAsync(dummyCredetials).get();
-	assertTrue(token.getToken().startsWith(dummyTokenString));
+	assertTrue(token.getToken().startsWith("invalid"));
     }
 
     @Test
     public void testRequestTokenAsync2() throws InterruptedException, ExecutionException
     {
-	long start = System.nanoTime();
-	CompletableFuture<UserToken> token = tokenProviderToTest.requestTokenAsync(dummyCredetials);
-	long invocationTime = ((System.nanoTime() - start)/1_000_000);
-	assertTrue(invocationTime < 1000);
-	assertTrue(token.get().getToken().startsWith(dummyTokenString));
+	CompletableFuture<UserToken> token = tokenProviderToTest.requestTokenAsync(dummyExceptionCredetials);
+	assertTrue(token.get().getToken().startsWith("invalid"));
 	
     }
 }
