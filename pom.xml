@@ -43,6 +43,11 @@
 				<artifactId>token-provider</artifactId>
                 <version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>rfbujan.backend.task3</groupId>
+				<artifactId>token-rest-service</artifactId>
+                <version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
     <profiles>
@@ -59,6 +64,16 @@
 				<module>rfbujan.backend.task2.athenticator-${project.version}</module>
 				<module>rfbujan.backend.task2.token-creator-${project.version}</module>
 				<module>rfbujan.backend.task2.token-provider-${project.version}</module>
+            </modules>
+		</profile>
+		<profile>
+			<id>task3</id>
+			<modules>
+                <module>rfbujan.backend.task2.common-${project.version}</module>
+				<module>rfbujan.backend.task2.athenticator-${project.version}</module>
+				<module>rfbujan.backend.task2.token-creator-${project.version}</module>
+				<module>rfbujan.backend.task2.token-provider-${project.version}</module>
+				<module>rfbujan.backend.task3.token-rest-service-${project.version}</module>
             </modules>
 		</profile>
 	</profiles>

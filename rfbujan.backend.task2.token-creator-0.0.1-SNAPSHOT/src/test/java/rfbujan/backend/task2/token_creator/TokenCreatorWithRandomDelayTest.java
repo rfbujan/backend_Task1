@@ -50,7 +50,7 @@ public class TokenCreatorWithRandomDelayTest
 	UserToken result = serviceUnderTest.issueTokenAsync(validUser).get();
 
 	assertTrue(result.getToken().startsWith(userName));
-	String resultTimeString = result.getToken().substring(userName.length());
+	String resultTimeString = result.getToken().substring(userName.length()+UserToken.SEPARATOR.length());
 
 	// Check that the format of the timestamp is correst
 

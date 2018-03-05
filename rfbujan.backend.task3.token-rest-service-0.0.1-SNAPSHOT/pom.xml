@@ -5,7 +5,7 @@
 
     <groupId>rfbujan.backend.task3</groupId>
     <artifactId>token-rest-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

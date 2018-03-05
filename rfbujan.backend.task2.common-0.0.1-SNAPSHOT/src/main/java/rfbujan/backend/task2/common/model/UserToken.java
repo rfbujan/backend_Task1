@@ -21,6 +21,10 @@ public class UserToken
 {
     private final String token;
     public final static String INVALID = "invalid";
+    /**
+     * 
+     */
+    public final static String SEPARATOR = "_";
 
     public UserToken(String userId)
     {
@@ -58,7 +62,7 @@ public class UserToken
     private String generateTokenWithUTC(String userId)
     {
 	String utc = ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT);
-	return userId + utc;
+	return userId +SEPARATOR+ utc;
     }
 
     @Override
