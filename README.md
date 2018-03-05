@@ -1,38 +1,56 @@
-# Backend Technical Assesement
+# Back-end Technical Assessment
 
 ## Introduction
-This is the solution provided as response of the Addison Global Backend Technical Assesement. The solution is formed by 5 Java projects that implement the three tasks of the assesment. The relation between projects and tasks is as follows:
+This is the solution provided as response of the Addison Global Backend Technical Assessment. 
+
+As requested, this document contains relevant information related to technical assumptions/decisions made, as well as instructions for running a solution (when applicable) and tests in a Linux environment.
+
+The document is divided in four sections where the first section provides common information for the whole solution. And the following three sections provide more specific details for each of the implemented tasks.
+
+The solution is formed by 5 Java projects that implement the three tasks of the assessment.
+
+### Solution structure
+The relation of projects with the tasks that they implement is as follows
+
   1. task1 (service interface)
-     * task1_token_service
+  
+	1. task1_token_service
   2. task2 (Service Implementation)
-     * task2_common
-     * task2_authenticator
-     * task2_token_creator
-     * task2_token_provider
+  
+	1. task2_common
+	2. task2_authenticator
+	3. task2_token_creator
+	4. task2_token_provider
   3. task3 (REST API)
-     * task3_token_rest_service
+  
+	1. task3_token_rest_service
 
 ## General Considerations
-### Asumptions and Decisions made
+
+### Assumptions and Decisions made
+### Technical choices
+Maven as dependency and build life cycle management tool. 
+Junit 4 as unit test framework
+ 
+### Room for improvement
+### Instructions 
+Logging mechanism--> A logging mechanism 
+
+
+## Service Trait / Interface
+### Assumptions and Decisions made
 ### Technical choices
 ### Room for improvement
-### Instrustions 
-     
+### Instructions 
 
-### Service Trait / Interface
-#### Asumptions and Decisions made
-#### Technical choices
-#### Room for improvement
-#### Instrustions 
+## Service Implementation
+### Assumptions and Decisions made
+### Technical choices
+### Room for improvement
+### Instructions 
 
-### Service Implementation
-#### Asumptions and Decisions made
-#### Technical choices
-#### Room for improvement
-#### Instrustions 
-
-### REST API
-#### Asumptions and Decisions made
-#### Technical choices
-#### Room for improvement
-#### Instrustions 
+## REST API
+### Assumptions and Decisions made
+### Technical choices
+### Room for improvement
+### Instructions 
