@@ -54,26 +54,26 @@
 		<profile>
 			<id>task1</id>
 			<modules>
-                <module>rfbujan.backend-taks1-${project.version}</module>
+                <module>task1_token_service</module>
             </modules>
 		</profile>
 		<profile>
 			<id>task2</id>
 			<modules>
-                <module>rfbujan.backend.task2.common-${project.version}</module>
-				<module>rfbujan.backend.task2.athenticator-${project.version}</module>
-				<module>rfbujan.backend.task2.token-creator-${project.version}</module>
-				<module>rfbujan.backend.task2.token-provider-${project.version}</module>
+                <module>task2_common</module>
+				<module>task2_authenticator</module>
+				<module>task2_token_creator</module>
+				<module>task2_token_provider</module>
             </modules>
 		</profile>
 		<profile>
 			<id>task3</id>
 			<modules>
-                <module>rfbujan.backend.task2.common-${project.version}</module>
-				<module>rfbujan.backend.task2.athenticator-${project.version}</module>
-				<module>rfbujan.backend.task2.token-creator-${project.version}</module>
-				<module>rfbujan.backend.task2.token-provider-${project.version}</module>
-				<module>rfbujan.backend.task3.token-rest-service-${project.version}</module>
+                <module>task2_common</module>
+				<module>task2_authenticator</module>
+				<module>task2_token_creator</module>
+				<module>task2_token_provider</module>
+				<module>task3_token_rest_service</module>
             </modules>
 		</profile>
 	</profiles>
