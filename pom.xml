@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>rfbujan</groupId>
+    <artifactId>backend</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>rfbujan backend exercise tasks</name>
+
+	<properties>
+        <project.root>${basedir}</project.root>
+        <maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>rfbujan</groupId>
+                <artifactId>backend-task1</artifactId>
+                <version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>rfbujan.backend.task2</groupId>
+				<artifactId>common</artifactId>
+                <version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>rfbujan.backend.task2</groupId>
+				<artifactId>token-creator</artifactId>
+                <version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>rfbujan.backend.task2</groupId>
+				<artifactId>athenticator</artifactId>
+                <version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>rfbujan.backend.task2</groupId>
+				<artifactId>token-provider</artifactId>
+                <version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+    <profiles>
+		<profile>
+			<id>task1</id>
+			<modules>
+                <module>rfbujan.backend-taks1-${project.version}</module>
+            </modules>
+		</profile>
+		<profile>
+			<id>task2</id>
+			<modules>
+                <module>rfbujan.backend.task2.common-${project.version}</module>
+				<module>rfbujan.backend.task2.athenticator-${project.version}</module>
+				<module>rfbujan.backend.task2.token-creator-${project.version}</module>
+				<module>rfbujan.backend.task2.token-provider-${project.version}</module>
+            </modules>
+		</profile>
+	</profiles>
+</project>
