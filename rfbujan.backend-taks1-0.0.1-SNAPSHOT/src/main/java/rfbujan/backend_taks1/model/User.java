@@ -1,12 +1,15 @@
 package rfbujan.backend_taks1.model;
 
+import net.jcip.annotations.ThreadSafe;
+
 /**
  * User - Identifies a given customer within the system. For simplicity, it just
  * contains userId which will match the username of the given customer.
  * 
- * @author rafb
- *
+ * This class is immutable and therefore thread-safe.
+ * 
  */
+@ThreadSafe
 public class User
 {
     public final String userId;

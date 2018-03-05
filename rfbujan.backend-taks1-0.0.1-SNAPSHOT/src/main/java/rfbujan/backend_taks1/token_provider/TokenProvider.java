@@ -6,25 +6,20 @@ import rfbujan.backend_taks1.model.Credentials;
 import rfbujan.backend_taks1.model.UserToken;
 
 /**
- * This interface provides the list operations that needed for providing a user
- * token based on given credentials.
+ * Token provider that allows requests for a user token based on given credentials.
  * <p>
- * The {@link TokenProvider} interface contemplates to implementations of user
- * token requests:
+ *This token provider contemplates two implementations of user token requests:
  * <ul>
- * <li>Synchronous implementation where requests are processed sequentially
- * (blocking-API).
- * <li>Asynchronous implementation where requests are can be processed in a
- * concurrent fashion (non-blocking API).
+ * <li><b>Synchronous implementation</b> where requests are processed sequentially (blocking-API).
+ * <li><b>Asynchronous implementation</b> where requests can be processed in a concurrent fashion (non-blocking API).
  * <ul>
  * <p>
  */
 public interface TokenProvider
 {
     /**
-     * Creates a user token from given credentials. This implementation is a
-     * blocking method where callers need to wait for the user token to be created
-     * and returned.
+     * Creates a user token from given credentials. This implementation is a blocking method where callers need to wait
+     * for the user token to be created and returned.
      * <p>
      * 
      * @param credentials
@@ -34,16 +29,14 @@ public interface TokenProvider
     public UserToken requestToken(Credentials credentials);
 
     /**
-     * Creates a user token from given credentials. This implementation is a
-     * non-blocking method where callers do not need to wait for the user token to
-     * be created and returned.
+     * Creates a user token from given credentials. This implementation is a non-blocking method where callers do not
+     * need to wait for the user token to be created and returned.
      * <p>
      * 
      * @param credentials
      *            {@link Credentials} from which a user token will be created.
-     * @return {@link CompletableFuture} returned immediately to the callers which
-     *         from which the requested user token can be retrieved once it is
-     *         calculated.
+     * @return {@link CompletableFuture} returned immediately to the callers which from which the requested user token
+     *         can be retrieved once it is calculated.
      */
     public CompletableFuture<UserToken> requestTokenAsync(Credentials credentials);
 

@@ -5,7 +5,7 @@ import rfbujan.backend_taks1.model.UserToken;
 import rfbujan.backend_taks1.token_creation.exception.TokenCreationException;
 
 /**
- * Interface that defines the list of operations related to the creation of a token
+ * Token creator that provides the means needed for generating a {@link UserToken} for a given {@link User}.
  *
  */
 public interface TokenCreator

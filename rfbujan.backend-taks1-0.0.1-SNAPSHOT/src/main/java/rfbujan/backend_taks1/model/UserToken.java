@@ -1,13 +1,17 @@
 package rfbujan.backend_taks1.model;
 
+import net.jcip.annotations.ThreadSafe;
+
 /**
  * UserToken - Token granted to a user in order to perform further operations in
  * the system. It is the concatenation of the userId and the current time. For
  * example: user123_2017-01-01T10:00:00.000
  * 
+ * This class is immutable and therefore thread-safe
  * @author rafb
  *
  */
+@ThreadSafe
 public class UserToken
 {
     public final String token;

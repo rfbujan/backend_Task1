@@ -1,12 +1,16 @@
 package rfbujan.backend_taks1.model;
 
+import net.jcip.annotations.ThreadSafe;
+
 /**
  * Credentials - A tuple of username and password that are used to authenticate
  * a customer.
  * 
+ * This class is immutable and therefore Thread-safe
  * @author rafb
  *
  */
+@ThreadSafe
 public class Credentials
 {
     public final String username;
