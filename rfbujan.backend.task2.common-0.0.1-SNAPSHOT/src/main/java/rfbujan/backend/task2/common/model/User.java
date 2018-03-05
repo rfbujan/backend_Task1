@@ -42,15 +42,6 @@ public class User
 	return new User(INVALID);
     }
 
-    /**
-     * checks that the {@link #userId} is not <code>null</code> and that it does not start with "invalid" keyword.
-     * 
-     * @return <b>True</b> if the User is valid, <b>False</b> otherwise.
-     */
-    public boolean isValid()
-    {
-	return userId != null && !userId.equals("invalid");
-    }
 
     @Override
     public int hashCode()

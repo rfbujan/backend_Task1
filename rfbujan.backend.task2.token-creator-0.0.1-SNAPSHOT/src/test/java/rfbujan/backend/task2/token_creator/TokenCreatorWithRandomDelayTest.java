@@ -27,7 +27,6 @@ public class TokenCreatorWithRandomDelayTest
     String userName = "house";
     User validUser;
     User invalidUser;
-    User nullUser;
 
     @Before
     public void setUp() throws Exception
@@ -37,7 +36,6 @@ public class TokenCreatorWithRandomDelayTest
 	// If the password matches the username in uppercase, the validation is a
 	// success, otherwise is a failure
 	invalidUser = new User('A' + userName);
-	nullUser = new User(null);
 	
 
     }
@@ -81,10 +79,4 @@ public class TokenCreatorWithRandomDelayTest
 	assertTrue(result.getToken().startsWith("invalid"));
     }
     
-    @Test
-    public void testIssueTokenAsyncNullUser() throws InterruptedException, ExecutionException
-    {
-	UserToken result = serviceUnderTest.issueTokenAsync(nullUser).get();
-	assertTrue(result.getToken().startsWith("invalid"));
-    }
 }

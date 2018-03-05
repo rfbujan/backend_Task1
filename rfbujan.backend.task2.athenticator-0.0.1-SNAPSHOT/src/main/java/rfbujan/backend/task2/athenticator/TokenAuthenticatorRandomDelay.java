@@ -24,19 +24,41 @@ import rfbujan.backend.task2.common.model.User;
 public class TokenAuthenticatorRandomDelay implements TokenAuthenticator
 {
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException
+     *             if the input is <code>null</code> or any of its attributes (i.e. {@link Credentials#getPassword()} or
+     *             {@link Credentials#getUsername()})
+     * 
+     */
     @Override
     public CompletableFuture<User> authenticateAsync(Credentials credentials)
     {
+	checkInputStatus(credentials);
+
 	return CompletableFuture.supplyAsync(() ->
 	{
 	    return authenticate(credentials);
 	});
     }
 
+    /*
+     * makes sure that the input is not corrupted with null values
+     */
+    private void checkInputStatus(Credentials credentials)
+    {
+	if (credentials == null || credentials.getUsername() == null || credentials.getPassword() == null)
+	{
+	    throw new IllegalArgumentException("Credentials cannot be null");
+	}
+
+    }
+
     private User authenticate(Credentials credentials)
     {
 	randomDelay();
-	if (validate(credentials))
+	if (usernameUpperCaseEqualsPassword(credentials))
 	{
 	    return new User(credentials.getUsername());
 	} else
@@ -45,12 +67,12 @@ public class TokenAuthenticatorRandomDelay implements TokenAuthenticator
 	}
     }
 
-    private boolean validate(Credentials credentials)
+    private boolean usernameUpperCaseEqualsPassword(Credentials credentials)
     {
 	String username = credentials.getUsername();
 	String password = credentials.getPassword();
 
-	return username != null && password != null && username.toUpperCase().equals(password);
+	return username.toUpperCase().equals(password);
     }
 
 }

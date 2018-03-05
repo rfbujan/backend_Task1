@@ -5,6 +5,7 @@ import static rfbujan.backend.task2.common.utils.Utils.randomDelay;
 import java.util.concurrent.CompletableFuture;
 
 import net.jcip.annotations.ThreadSafe;
+import rfbujan.backend.task2.common.model.Credentials;
 import rfbujan.backend.task2.common.model.User;
 import rfbujan.backend.task2.common.model.UserToken;
 import rfbujan.backend.task2.common.token.creator.TokenCreator;
@@ -24,13 +25,33 @@ import rfbujan.backend.task2.common.token.creator.TokenCreator;
 public class TokenCreatorWithRandomDelay implements TokenCreator
 {
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException
+     *             if the input is <code>null</code> or any of its attributes (i.e. {@link User#getUserId()})
+     * 
+     */
     @Override
     public CompletableFuture<UserToken> issueTokenAsync(User user)
     {
+	checkInputStatus(user);
 	return CompletableFuture.supplyAsync(() ->
 	{
 	    return issueToken(user);
 	});
+    }
+
+    /*
+     * makes sure that the input is not corrupted with null values
+     */
+    private void checkInputStatus(User user)
+    {
+	if (user == null || user.getUserId() == null)
+	{
+	    throw new IllegalArgumentException("ERROR: Input corrupted. User cannot be null");
+	}
+
     }
 
     private UserToken issueToken(User user)
@@ -45,9 +66,12 @@ public class TokenCreatorWithRandomDelay implements TokenCreator
 	}
     }
 
+    /*
+     * If the userId of the provided User starts with A, the call will fail.
+     */
     private boolean validateUser(User user)
     {
-	return user.isValid() && !user.getUserId().startsWith("A");
+	return !user.getUserId().startsWith("A");
     }
 
 }
