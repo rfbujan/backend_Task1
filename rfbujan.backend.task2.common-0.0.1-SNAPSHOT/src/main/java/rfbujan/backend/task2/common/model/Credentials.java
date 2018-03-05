@@ -1,12 +1,15 @@
 package rfbujan.backend.task2.common.model;
 
+import net.jcip.annotations.ThreadSafe;
+
 /**
- * Credentials - A tuple of username and password that are used to authenticate
+ * Credentials - A tuple of user name and password that are used to authenticate
  * a customer.
  * 
- * @author rafb
+ * This class is immutable and therefore Thread-safe
  *
  */
+@ThreadSafe
 public class Credentials
 {
     private final String username;
@@ -43,6 +46,12 @@ public class Credentials
 	return result;
     }
 
+    /**
+     * Another object is considered equal to a UserToken object if it is an
+     * instance of UserToken and all attributes (i.e. password and name) are
+     * equals among each other.
+     * <p>
+     */
     @Override
     public boolean equals(Object obj)
     {

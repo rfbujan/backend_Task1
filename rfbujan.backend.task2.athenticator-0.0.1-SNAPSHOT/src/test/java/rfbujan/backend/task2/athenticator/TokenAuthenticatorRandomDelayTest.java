@@ -21,15 +21,18 @@ public class TokenAuthenticatorRandomDelayTest extends TestCase
     User invalidUser;
     Credentials validCredentials;
     Credentials invalidCredentials;
+    Credentials nullCredentials;
     
     protected void setUp() throws Exception
     {
 	serviceUnderTest = new TokenAuthenticatorRandomDelay();
 	validUser = new User(userName);
 	invalidUser = User.invalidUser();
+	
 	//If the password matches the username in uppercase, the validation is a success, otherwise is a failure
 	validCredentials = new Credentials(userName, userName.toUpperCase());
 	invalidCredentials = new Credentials(userName, userName);
+	nullCredentials = new Credentials(null, null);
 	
     }
     
@@ -46,6 +49,13 @@ public class TokenAuthenticatorRandomDelayTest extends TestCase
     public void testAuthenticateAsyncInvalidCredentials() throws InterruptedException, ExecutionException
     {
 	User result = serviceUnderTest.authenticateAsync(invalidCredentials).get();
+	assertEquals(invalidUser, result);
+    }
+    
+    @Test
+    public void testAuthenticateAsyncNullCredentials() throws InterruptedException, ExecutionException
+    {
+	User result = serviceUnderTest.authenticateAsync(nullCredentials).get();
 	assertEquals(invalidUser, result);
     }
     

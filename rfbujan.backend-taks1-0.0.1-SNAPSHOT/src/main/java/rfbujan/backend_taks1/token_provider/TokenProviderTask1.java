@@ -74,7 +74,11 @@ public class TokenProviderTask1 implements TokenProvider
 	return new UserToken(INVALID_TOKEN);
     }
 
-    
+
+    /**
+     * 
+     * non-blocking implementation of the {@link #requestToken(Credentials)} method
+     */
     @Override
     public CompletableFuture<UserToken> requestTokenAsync(Credentials credentials)
     {

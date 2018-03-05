@@ -27,6 +27,7 @@ public class TokenCreatorWithRandomDelayTest
     String userName = "house";
     User validUser;
     User invalidUser;
+    User nullUser;
 
     @Before
     public void setUp() throws Exception
@@ -36,6 +37,8 @@ public class TokenCreatorWithRandomDelayTest
 	// If the password matches the username in uppercase, the validation is a
 	// success, otherwise is a failure
 	invalidUser = new User('A' + userName);
+	nullUser = new User(null);
+	
 
     }
 
@@ -46,9 +49,7 @@ public class TokenCreatorWithRandomDelayTest
     public void testIssueTokenAsync() throws InterruptedException, ExecutionException
     {
 	ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-	long start = System.nanoTime();
 	UserToken result = serviceUnderTest.issueTokenAsync(validUser).get();
-	long invocationTime = ((System.nanoTime() - start));
 
 	assertTrue(result.getToken().startsWith(userName));
 	String resultTimeString = result.getToken().substring(userName.length());
@@ -69,14 +70,21 @@ public class TokenCreatorWithRandomDelayTest
 	assertTrue("the time stamp used within the usertoken is out of the valid time range. is smaller!",
 		now.isBefore(resultTime));
 	assertTrue("the time stamp used within the usertoken is out of the valid time range. is greater!",
-		now.plusNanos(invocationTime).isAfter(resultTime));
+		now.plusSeconds(5).isAfter(resultTime));
 
     }
 
     @Test
-    public void testIssueTokenAsyncInvalidCredentials() throws InterruptedException, ExecutionException
+    public void testIssueTokenAsyncInvalidUser() throws InterruptedException, ExecutionException
     {
 	UserToken result = serviceUnderTest.issueTokenAsync(invalidUser).get();
+	assertTrue(result.getToken().startsWith("invalid"));
+    }
+    
+    @Test
+    public void testIssueTokenAsyncNullUser() throws InterruptedException, ExecutionException
+    {
+	UserToken result = serviceUnderTest.issueTokenAsync(nullUser).get();
 	assertTrue(result.getToken().startsWith("invalid"));
     }
 }

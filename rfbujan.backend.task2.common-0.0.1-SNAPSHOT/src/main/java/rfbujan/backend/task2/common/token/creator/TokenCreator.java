@@ -6,7 +6,7 @@ import rfbujan.backend.task2.common.model.User;
 import rfbujan.backend.task2.common.model.UserToken;
 
 /**
- * Interface that defines the list of operations related to the creation of a token
+ * Token creator that provides the means needed for generating a {@link UserToken} for a given {@link User}.
  *
  */
 public interface TokenCreator

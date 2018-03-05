@@ -7,8 +7,7 @@ import rfbujan.backend.task2.common.model.UserToken;
 
 
 /**
- * This interface provides the list operations that needed for providing a user
- * token based on given credentials.
+ * Token provider that allows requests for a user token based on given credentials.
  * <p>
  *
  */

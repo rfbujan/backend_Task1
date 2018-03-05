@@ -4,7 +4,7 @@ import net.jcip.annotations.ThreadSafe;
 
 /**
  * User - Identifies a given customer within the system. For simplicity, it just
- * contains userId which will match the username of the given customer.
+ * contains userId which will match the user name of the given customer.
  * 
  * This class is immutable and therefore thread-safe.
  * 
@@ -14,10 +14,10 @@ public class User
 {
     public final String userId;
 
-    public User(String userId)
+    public User(String userName)
     {
 	super();
-	this.userId = userId;
+	this.userId = userName;
     }
 
 

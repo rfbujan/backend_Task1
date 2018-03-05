@@ -18,6 +18,9 @@ public interface TokenCreator
      * 		{@link User} representing a user for which a token has to be created.
      * @return
      * 		{@link UserToken} representing the token return for a given user.
+     * 
+     * @throws TokenCreationException 
+     * 				representing possible exceptions while requesting a new Token.
      */
     UserToken issueToken(User user) throws TokenCreationException;
 }

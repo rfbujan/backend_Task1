@@ -6,8 +6,8 @@ import rfbujan.backend.task2.common.model.Credentials;
 import rfbujan.backend.task2.common.model.User;
 
 /**
- * This interface defines the list of operations related to Token
- * authentification.
+ * Token authenticator that provides the means for validating given {@link Credentials} and generate a {@link User} from
+ * them.
  * <p>
  *
  */
