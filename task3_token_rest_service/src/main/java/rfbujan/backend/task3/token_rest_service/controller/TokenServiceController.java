@@ -13,6 +13,10 @@ import rfbujan.backend.task2.common.token.provider.TokenProvider;
 import rfbujan.backend.task2.token_creator.TokenCreatorWithRandomDelay;
 import rfbujan.backend.task2.token_provider.SimpleAsyncTokenService;
 
+/**
+ * Spring controller that exposes the {@link SimpleAsyncTokenService} methods as HTTP endpoints.
+ * <p>
+ */
 @RestController
 public class TokenServiceController {
 
