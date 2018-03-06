@@ -25,17 +25,14 @@ In order to achieve code that is easy to read and follow, all functionality has 
 The three tasks have been implemented under the same repository but in different Java projects. The relation of projects with the tasks that they implement is as follows
 
   1. task1 (service interface)
-  
-	1. task1_token_service
+  	* task1_token_service
   2. task2 (Service Implementation)
-  
-	1. task2_common
-	2. task2_authenticator
-	3. task2_token_creator
-	4. task2_token_provider
+	* task2_common
+	* task2_authenticator
+	* task2_token_creator
+	* task2_token_provider
   3. task3 (REST API)
-  
-	1. task3_token_rest_service
+  	* task3_token_rest_service
 	
 ### Technical choices
 
