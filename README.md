@@ -5,7 +5,7 @@ Introduction
 
 This is the solution provided as response of the Addison Global Backend Technical Assessment. 
 
-As requested, this document contains relevant information related to technical assumptions/decisions made, as well as instructions for running a solution (when applicable) and tests in a Linux environment.
+As requested, this document contains relevant information related to technical assumptions/decisions made, as well as instructions for running the solution and its tests in a Linux environment.
 
 The document is divided in four main sections: one for general considerations applicable to all projects; and other three sections, each on dedicated to each of the tasks to be implemented. 
 
@@ -25,14 +25,14 @@ General Considerations
 
 The programming language chosen for implementing this exercise is Java 8.  All modules have been implemented following the SOLID design principles (promoted by Robert C. Martin) in order to provide a more understandable, flexible and maintainable solution. 
 
-Unit tests are provided for all classes that implement some functionality, leaving out data model objects (such as User, UserToken and Credentials) and interfaces. These tests have been implemented following the F.I.R.S.T principles where unit tests must be Fast, Independent, Repeatable and Self-Validating.
+Unit tests are provided for all classes that implement some functionality, leaving out datamodel objects (such as User, UserToken and Credentials) and interfaces. These tests have been implemented following the F.I.R.S.T principles where unit tests must be Fast, Independent, Repeatable and Self-Validating.
 
-All provided code has been properly commented. Comments have been kept to minimal use, avoiding redundant and noise comments that add no value to the solution but rather clutter. All public interfaces have been documented with Javadocs. And the JCIP annotation has been used for document concurrent programming matters (as recommended in Java Concurrency In Practice book.). 
+All provided code has been properly commented. Comments have been kept minimal in order to avoiding redundant and noisy comments that add no value to the solution but rather clutter. All public interfaces have been documented with Javadocs. And the JCIP annotation has been used for document concurrent programming matters (as recommended in Java Concurrency In Practice book.). 
 
 As Robert C. Martin said: 
 > "The proper use of comments is to compensate for our failure to express in code. Note that I used the word failure. I meant it. Comments are always failures.". 
 
-In order to achieve code that is easy to read and follow, all functionality has been implemented in methods which are short, well named, and nicely organized. For private methods where the code should be expressive and clear enough, comments have not been added. Also a Eclipse format template has been created in order to get easily a nice format of the code which is applied all across the code solution.
+In order to achieve code that is easy to read and go through, all functionality has been implemented in methods which are short, well named, and nicely organized. For private methods by default comments have not been added since none of them implement a too complicated functionality that cannot be clearly express in code. In addition, a format template (*format_backend_test_template.xml*) has been created in order to get easily a nice format of the code which is applied all across the code solution.
 
 Assumptions and Decisions made
 ------------------
