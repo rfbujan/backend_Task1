@@ -79,9 +79,19 @@ For downloading the whole exercise just clone the repository with the following 
 
 This git command will create a folder called *backend_technical_test* which contains the whole repository and therefore the five Java projects.
 
-The dependencies as build life-cycle for all three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
+For building and installing all artifacts used by the projects into the local repository:
+`mvn clean install`
 
-For running tests, `mvn test` will run all unit tests and `mvn failsafe:integration-test` will run the integration tests.   
+For running unit tests: 
+`mvn test` 
+For running integration tests: 
+`mvn failsafe:integration-test` will run the integration tests.   
+
+For running the REST API implemented as part of task3:
+- `cd task3_token_rest_service` (assuming that the current location is the main repository folder)
+-  `mvn spring-boot:run`
+
+**IMPORTANT:** if port 8080 is in used the application will complain.
 
 
 Service Trait / Interface
