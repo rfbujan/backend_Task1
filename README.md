@@ -1,13 +1,16 @@
 # Back-end Technical Assessment
 
-## Introduction
+Introduction
+============
+
 This is the solution provided as response of the Addison Global Backend Technical Assessment. 
 
 As requested, this document contains relevant information related to technical assumptions/decisions made, as well as instructions for running a solution (when applicable) and tests in a Linux environment.
 
 The document is divided in four sections where the first section provides common information for the whole solution. And the following three sections provide more specific details for each of the implemented tasks.
 
-## General Considerations
+General Considerations
+======================
 
 The programming language chosen for implementing this exercise is Java 8.  All modules have been implemented following the SOLID design principles (promoted by Robert C. Martin) in order to provide a more understandable, flexible and maintainable solution. 
 
@@ -20,7 +23,8 @@ As Robert C. Martin said:
 
 In order to achieve code that is easy to read and follow, all functionality has been implemented in methods which are short, well named, and nicely organized. For private methods where the code should be expressive and clear enough, comments have not been added. Also a Eclipse format template has been created in order to get easily a nice format of the code which is applied all across the code solution.
 
-### Solution structure
+Solution structure
+------------------
 
 The three tasks have been implemented under the same repository but in different Java projects. The relation of projects with the tasks that they implement is as follows
 
@@ -34,7 +38,9 @@ The three tasks have been implemented under the same repository but in different
   3. task3 (REST API)
   	* task3_token_rest_service
 	
-### Technical choices
+Technical choices
+-----------------
+
 - **Eclipse Oxygen** as IDE. 
 - **Maven** as dependency and build life cycle management tool. 
 - **Junit** 4 as unit test framework.
@@ -42,28 +48,37 @@ The three tasks have been implemented under the same repository but in different
 - **JCIP** for concurrent annotation.
 - **GIT** as control version tool. 
  
-### Room for improvement
+Room for improvement
+--------------------
 
 There is room for improvement in different parts of the solution. Here are only listed some of the improvements that applies to all three solutions. Additional improvements will be commented for a particular task in its corresponding section.
 
 - **Logging mechanism:** Logging framework (such as log4j) that records different levels of relevant events that takes place in a operating system. 
 - **Code coverage tool:** Coverage tools (such as sonarQ) report gaps in your testing strategy. They make it easy to find modules, classes, and functions that are insufficiently tested. 
 
-### Instructions 
-All three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
+Instructions 
+------------
+For downloading the whole exercise just clone the repository with the following command:
+`git clone https://github.com/rfbujan/backend_technical_test.git`
 
-For running tests `mvn test` will run all unit tests and `mvn failsafe:integration-test` will run the integration tests. 
+This git command will create a folder called *backend_technical_test* which contains the whole repository and therefore the five Java projects.
+
+The dependencies as build life-cycle for all three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
+
+For running tests, `mvn test` will run all unit tests and `mvn failsafe:integration-test` will run the integration tests. 
 
 In addition, the parent maven pom defines three profiles (task1, task2 and task3), which allows to govern the different solutions for each task independently. (e.g. `mvn -Ptask2 clean install` ) will only affect to the projects that forms the solution for the task 2.   
 
 
-## Service Trait / Interface
+Service Trait / Interface
+=========================
 
 The solution for this tasks is implemented by a single Java project called *task1_token_service*. this project is wrapped in a maven artifact (*token_service_interface*) and it is declared under the profile *task1* in the main maven pom file. 
 
 As requested in the assessment, this project implements two versions of the `requestToken(Credentials credentials)` method. One implementation is synchronous and another one is asynchronous.
  
-### Assumptions and Decisions made
+Assumptions and Decisions made
+------------------------------
 
 The original interface suggested by the assessment has been splitted in three interfaces:  
  - `TokenAuthenticator` : provides the means needed for generating a user Token for a given user. `User authenticate(Credentials credentials)` method
@@ -117,15 +132,23 @@ The unit tests implemented checks:
 
 For implementing the different scenraios the implementations for the interfaces `TokenAuthenticator` and `TokenCreator` are mocked.
 
-### Technical choices
+Technical choices
+-----------------
+
 *No additional technical choices besides the ones already mentioned on the General Considerations section* 
-### Room for improvement
+
+Room for improvement
+--------------------
+
 **Custom *Executor*:** A custom *Executor* can be passed as a second argument to the overloaded version of the *supplyAsync* factory method. The performance can be improved by creating a new *Executor* that fits the characteristics of the application maximizing the usage of available resources.  
-### Instructions 
+
+Instructions 
+------------
+
 As mentioned in previous sections, maven is the tool chosen for the build life-cycle management and a profile called task1 has been created for this particular solution. As this solution, is not a complete product, it cannot be deployed or run as a normal application. The evaluation of this task has to be performed by inspecting the source code. Unit tests are provided for the implementation of the *TokenProvider* interface. These tests through maven with the command `mvn -Ptask1 clean install` or simply by calling `mvn -Ptask1 test`.
 
-
-## Service Implementation
+Service Implementation
+======================
 
 The solution for this tasks is implemented by a four Java project called *task2_common*, *task2_authenticator*, *task2_token_creator*, *task2_token_provider*. Each project is wrapped in a maven artifact (with id *common*,*athenticator*,*token-creator*,*token_service_interface* respectively) and they are declared under the profile *task2* in the main maven pom file. 
 
@@ -134,7 +157,8 @@ As requested in the assessment, this project implements three modules for the th
 - **Token Creator:** Returns a UserToken for a given User.
 - **Token Provider:** Makes use of the previously defined services for authenticating users and granting tokens.
 
-### Assumptions and Decisions made
+Assumptions and Decisions made
+------------------------------
 
 The solution provided for this task can be understood as an evolution of *task1*. In this case the implementation of the `TokenAuthenticator` and `TokenCreator`interfaces is also provided. Each module is implemented in a different Java projects which are independent one from each other (each module is not aware of the existance of the other module).  
 
@@ -178,27 +202,36 @@ Also, it is worth notice, that exceptions are handled differently in this soluti
 
 Unit tests are provided for all three modules. the *common* module does not provide unit test since has no (or very trivial) functionality. The approach follow for unt testing is the same as per task1.
 
-### Technical choices
+Technical choices
+-----------------
 
 *No additional technical choices besides the ones already mentioned on the General Considerations section* 
-### Room for improvement
+
+Room for improvement
+--------------------
 
 As mentioned earlier thereare several points where this solution can be improved:
 - **Dynamic Modularity:** Eventhough, each of the services are implemented in different modules where each module is not aware of the other, still the integration of all three modules (as we will see in task3) ties the modules in runtime. It is not possible to upgrade pr replace a modules without stopping the application and re-compiling the code. This can be improved following a more modular approach as the one provided by the OSGi standard where services are registered and can be installed, resolved, started, stopped and un-installed at runtime. The drawback of this solution is that implementing OSGi service is not a simple task and adds complexity to the solution. Other approach is to implement each module as a ReST service (similar as it is done in task3). Other solution would be to use an Actors framework as suggested in the assessment. 
 - **Common datamodel:** the common data model approach has been adapted because reduce duplicities in the code and avoids having to translate objects between the different modules. The problem of this approach is that each change on the datamodel, even if it is for a particular service, affects all the other modules. Other problem is that the common data model implement funtionality that might be not of interest for all modules (e.g. the *randomDelay* method is not used by the SimpleAsyncTokenService).
 - **Custom Executor:** It is a sensible choice to create an *Executor* with a number of threads in its pool that takes into account the actual workload of the application. The problem of this feature is that it is not an easy task sizing thread pools. In the book *Java Concurrency in Practice* give some advice to find the optimal size for a thread pool. This is important because if the number of threads in the pool is too big, they will end up competing for scarce CPI and memory resources. Conversely, if this number is too small, some of the cores of the CPU will remain underutilized.
 - **Scalability:** this solution does not scale horizontally. It can only scale-up by upgrading the resources on the server where the application is running. The Rest service approach, or the Actors model approach suggested for the *Dynamic Modularity* issue would be valid for solving this problem. 
-### Instructions 
+
+Instructions
+============
 
 As per task1 there is not an actual application to be run. This will be performed as part of task3. The evaluation of this task has to be done also by inspecting the code. 
 Unit tests can be run through maven with the command `mvn -Ptask2 clean install` or simply by calling `mvn -Ptask2 test`.
 
-## REST API
+REST API
+========
+
 The solution for this task is implemented by a single Java Project called *task3_token_rest_service* which re-uses the modules implemented in the task2. this project is wrapped in a maven arifact (*token-rest-service*) and it declared under the profile *task3* in the main pom file, which also includes the modules from task2.
 
 As requested in the assesment, this project defines a simple REST API to offer the functionality of the **SimpleAsyncTokenService** implemented in the previous task.
 
-### Assumptions and Decisions made
+Assumptions and Decisions made
+------------------------------
+
 In this task the REST API makes use of the GET http method for requesting a new token from credentials provided (i.e. username and password). Username and password are provided as string parameters in the http request. 
 ```
 http://localhost:8080/token?username=perro&password=PERRO
@@ -214,14 +247,17 @@ If the credentials authorization does not succeed then the service return a JSON
 The project is quite simple. The application uses Spring Boot and it is formed by two main classses: `TokenServiceApplication`and `TokenServiceController`. The former is the main entry-point of the application. the latter exposes the annotated bean's method as HTTP endpoints.  `TokenServiceController` contains a single method *requestToken* that wraps the *resquestToken* method implemented for task2. 
 Spring Boot framework takes care of pretty much everything and for this reason no unit tests are provided in this solution. This project contains an integration test that makes sure that the whole solution work as expected together (including task2 solution).
 
-### Technical choices
+Technical choices
+-----------------
+
 - **Spring Boot** from creating REST Web service
 ### Room for improvement
 - **Creation of Service Objects:** the *SimpleAsyncTokenService* is created in situ with the other two services (as can be seen below). This could be improve with a Factory for each of the services. This will encampsulate the creaton of this objects and will help to maintain the system in case of (in hypothetical future) new families of of the three services are created. 
 ```java
 private final TokenProvider simpleAsyncTokenProvider = new SimpleAsyncTokenService(new TokenCreatorWithRandomDelay(), new TokenAuthenticatorRandomDelay());
 ```
-### Instructions  
+Instructions
+------------
 
 For this task there is an actual application to be run!! This application can be run by using the maven command ` mvn spring-boot:run'. Once the application is running then it can be tested using localhost (as IP) and the 8080 port (used by default in Tomcat). In the command shell should be something like the image *SpringBootConsole* stored in this repository. Also the port on which Tomcat is stated can be checked. 
 
