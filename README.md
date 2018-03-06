@@ -114,10 +114,12 @@ The original interface suggested by the assessment has been splitted in three in
  - **`TokenProvider`**: provides the means for requesting a user token based on given credentials. This interface provides two different implementations for requesting a token:
  	- `<UserToken requestToken(Credentials credentials)>`: synchronous implementation where clients need to wait for the token to be returned
  	- `<CompletableFuture<UserToken> requestTokenAsync(Credentials credentials)>`: Asynchronous implementation where clients don't need to wait for the token to be returned.
- 	
+
+The `TokenProvider` insterface is implemented by `rfbujan.backend_taks1.token_provider.TokenProviderTask1.java ` class.
+
 The original interface, suggested in the assessment, has been splitted in three interface in order to follow the Single Responsibility Principle (SRP) which states that a class or module should have one, and only one, reason to change. Class should have one responsibility.   
 
-As suggested, both implementations of *requestToken* have been designed in terms of *authentificate* and *issueToken*. This way, who ever implements the services will only need to implement the interfaces `TokenAuthenticator` and `TokenCreator` which contain the methods `User authenticate(Credentials credentials)` and `UserToken issueToken(User user) ` respectively. The  `rfbujan.backend_taks1.token_provider.TokenProviderTask1.java class` implements these two methods
+As suggested, both implementations of *requestToken* have been designed in terms of *authentificate* and *issueToken*. This way, who ever implements the services will only need to implement the interfaces `TokenAuthenticator` and `TokenCreator` which contain the methods `User authenticate(Credentials credentials)` and `UserToken issueToken(User user) ` respectively. 
 
 The non-blocking nature of the `CompletableFuture<UserToken> requestToken(Credentials credentials)` is provided by the *CompletableFeature* added in Java 8 (as suggested in the assessment). For doing that, the asynchronous *requestToken* method makes use of the *supplyAsync* factory method which accepts a *Supplier* as argument and returns a *CompletableFuture* that will be asynchronously completed with the value obtained by invoking that *Supplier*. This *Supplier* will be run by one of the *Executors* in the *ForkJoinPool*.   
 
@@ -174,6 +176,7 @@ Instructions
 ------------
 
 As mentioned in previous sections, maven is the tool chosen for the build life-cycle management and a profile called *task1* has been created for this particular solution. As this solution, is not a complete product, it cannot be deployed or run as a normal application. The evaluation of this task has to be performed by inspecting the source code. Unit tests are provided for the implementation of the *TokenProvider* interface (*TokenProviderTask1.java*). 
+
 For building and installing all artifacts used by the projects into the local repository:
 `mvn -Ptask1 clean install`
 
@@ -183,7 +186,7 @@ For running unit tests:
 Service Implementation
 ======================
 
-The solution for this tasks is implemented by a four Java project called *task2_common*, *task2_authenticator*, *task2_token_creator*, *task2_token_provider*. Each project is wrapped in a maven artifact (with id *common*,*athenticator*,*token-creator*,*token_service_interface* respectively) and they are declared under the profile *task2* in the main maven pom file. 
+The solution for this tasks is implemented by four Java project called *task2_common*, *task2_authenticator*, *task2_token_creator*, *task2_token_provider*. Each project is wrapped in a maven artifact (with id *common*,*athenticator*,*token-creator*,*token_service_interface* respectively) and they are declared under the profile *task2* in the main maven pom file. 
 
 As requested in the assessment, this project implements three modules for the three services:
 - **Authenticator:** Validates the Credentials and return an instance of a User.
@@ -199,9 +202,9 @@ As per task1, the implementation of *requestToken* have been designed in terms o
 
 Nevertheless, this solution is not as modular and dynamic as it is desire. In the "Room for improvement" section it is suggested how this can be improved. 
 
-As it is commented in the introduction of this task, there is a fourth module called *common*. This module contains the common data model and common utilities that are share by the three other modules. Again in the "Room for improvement" section it is documented how this can be achieve in another way and lists the pros and cons of having a common data model. 
+As it is commented in the introduction of this task, there is a fourth module called *common*. This module contains the common data model and utilities that are shared by the three other modules. Again in the "Room for improvement" section it is documented how this can be achieve in another way and lists the pros and cons of having a common data model. 
 
-The data model is quite similar to the one implemented for task1. It contains the three main objects: *User*, *UserToken*, *Credentials*. Again in this solution, the all three objects are inmutable which, in a multi-threaded environment, allows to read freely the objects without worrying about its state changing by other thread. It have a performance cost, but in this particular problem this should not be a concern (Objects are simple strings). A minor updated added in this solution, is that *User*, and *UserToken* includes the logic for creating an *invalid* user or *invalid* user token. Both objects contains a factory method with this purpose. 
+The data model is quite similar to the one implemented for *task1*. It contains the three main objects: *User*, *UserToken*, *Credentials*. Again in this solution, all three objects are immutable which, in a multi-threaded environment, allows to read freely the objects without worrying about its state changing by other thread. It has a performance cost, but in this particular problem this should not be a concern (Objects are simple strings). A minor updated added in this task2, is that *User* and *UserToken* includes the logic for creating an *invalid* user and an *invalid* user token. Both objects contains a factory method with this purpose. 
 
 ```java
  public static final UserToken invalidUserToken()
@@ -216,9 +219,9 @@ The data model is quite similar to the one implemented for task1. It contains th
     }
 ```
 
-Also in this module, the interfaces that the different modules implement are included with a similar definition as the one provided in task1. The main difference is that no specific Exceptions have been declared. And also, the `TokenAuthenticator` and `TokenCreator`interfaces have been defined as non-blocking APIs where the methods *authentificate* and *issueToken* return also a *CompletableFuture* object.
+Also in this *common* module, the interfaces are included with a similar definition as the one provided in task1. The main difference is that no specific Exceptions have been declared this time. And also, the `TokenAuthenticator` and `TokenCreator`interfaces have been defined as non-blocking APIs where the methods *authentificate* and *issueToken* return also a *CompletableFuture* object.
 
-In addition to the data model, the *common* project provides a utily class that gather commonn functionality (e.i. *randomDelay* used by the *Authenticator* service and *Creator* service).
+In addition to the data model, the *common* project provides a utily class that gathers commonn functionality (e.i. *randomDelay* used by the *Authenticator* service and *Creator* service).
 
 As per the implementation of the three interfaces, as already noted, each implementation is provided in a different module. They all follow the same principles as per the implementation of the task1 (the code is written as clear and easy to follow as possible). All methods follow a functional-style programming where there is no side-effects and the methods are characterized only by their input arguments and their output result. The methods implemented by all modules always returns the same result value when called with the same argument value (referenctial transparency). Although. it is important to noticed that for the *SimpleAsyncTokenService* implementation is not fully guaranteed since it relays on the implementation of the two other interfaces. As per task1, The SimpleAsyncTokenService gets the *TokenCreator* and *TokenAuthenticator* by composition. Eventhough this objects are declared as *final*, its immutability/side-effect-free/referencial transparency depends on how theses two interfaces are implemented. 
 
@@ -244,16 +247,21 @@ Room for improvement
 --------------------
 
 As mentioned earlier thereare several points where this solution can be improved:
-- **Dynamic Modularity:** Eventhough, each of the services are implemented in different modules where each module is not aware of the other, still the integration of all three modules (as we will see in task3) ties the modules in runtime. It is not possible to upgrade pr replace a modules without stopping the application and re-compiling the code. This can be improved following a more modular approach as the one provided by the OSGi standard where services are registered and can be installed, resolved, started, stopped and un-installed at runtime. The drawback of this solution is that implementing OSGi service is not a simple task and adds complexity to the solution. Other approach is to implement each module as a ReST service (similar as it is done in task3). Other solution would be to use an Actors framework as suggested in the assessment. 
+- **Dynamic Modularity:** Eventhough, each of the services are implemented in different modules where each module is not aware of the other, still the integration of all three modules (as we will see in task3) ties the modules in runtime. It is not possible to upgrade or replace a module without stopping the application and re-compiling the whole code. This can be improved following a more modular approach as the one provided by the OSGi standard where services are registered and can be installed, resolved, started, stopped and un-installed at runtime. The drawback of this solution is that implementing OSGi service is not a simple task and adds complexity to the solution. Other approach is to implement each module as a ReST service (similar as it is done in task3). Other solution would be to use an Actors framework as suggested in the assessment which it was not used here because my lack of knowledge with these frameworks. 
 - **Common datamodel:** the common data model approach has been adapted because reduce duplicities in the code and avoids having to translate objects between the different modules. The problem of this approach is that each change on the datamodel, even if it is for a particular service, affects all the other modules. Other problem is that the common data model implement funtionality that might be not of interest for all modules (e.g. the *randomDelay* method is not used by the SimpleAsyncTokenService).
-- **Custom Executor:** It is a sensible choice to create an *Executor* with a number of threads in its pool that takes into account the actual workload of the application. The problem of this feature is that it is not an easy task sizing thread pools. In the book *Java Concurrency in Practice* give some advice to find the optimal size for a thread pool. This is important because if the number of threads in the pool is too big, they will end up competing for scarce CPI and memory resources. Conversely, if this number is too small, some of the cores of the CPU will remain underutilized.
-- **Scalability:** this solution does not scale horizontally. It can only scale-up by upgrading the resources on the server where the application is running. The Rest service approach, or the Actors model approach suggested for the *Dynamic Modularity* issue would be valid for solving this problem. 
+- **Custom Executor:** As per task1, also here it is a sensible choice to create a custom *Executor* with a number of threads in its pool that takes into account the actual workload of the application. The problem of this feature is that it is not an easy task sizing thread pools. In the book *Java Concurrency in Practice* give some advice to find the optimal size for a thread pool. This is important because if the number of threads in the pool is too big, they will end up competing for scarce CPU and memory resources. Conversely, if this number is too small, some of the cores of the CPU will remain underutilized.
+- **Scalability:** this solution does not scale horizontally. It can only scale-up by upgrading the resources on the server where the application is running. The Rest service approach, or the Actors model approach suggested for the *Dynamic Modularity* issue would be a valid for solving this problem. 
 
 Instructions
 ============
 
 As per task1 there is not an actual application to be run. This will be performed as part of task3. The evaluation of this task has to be done also by inspecting the code. 
-Unit tests can be run through maven with the command `mvn -Ptask2 clean install` or simply by calling `mvn -Ptask2 test`.
+
+For building and installing all artifacts used by the projects into the local repository:
+`mvn -Ptask2 clean install`
+
+For running unit tests: 
+`mvn -Ptask2 test` 
 
 REST API
 ========
