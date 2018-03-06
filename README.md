@@ -87,9 +87,13 @@ For running unit tests:
 For running integration tests: 
 `mvn failsafe:integration-test` will run the integration tests.   
 
-For running the REST API implemented as part of task3:
+For running the REST API implemented as part of task3 using the maven plugin:
 - `cd task3_token_rest_service` (assuming that the current location is the main repository folder)
 -  `mvn spring-boot:run`
+
+For running the REST API as a Packaged Application: 
+- `mvn -Ptask3 clean install
+- `java -jar task3_token_rest_service/target/token-rest-service-0.0.1-SNAPSHOT.jar`
 
 **IMPORTANT:** if port 8080 is in used the application will complain.
 
