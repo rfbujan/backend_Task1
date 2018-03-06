@@ -7,7 +7,13 @@ This is the solution provided as response of the Addison Global Backend Technica
 
 As requested, this document contains relevant information related to technical assumptions/decisions made, as well as instructions for running a solution (when applicable) and tests in a Linux environment.
 
-The document is divided in four sections where the first section provides common information for the whole solution. And the following three sections provide more specific details for each of the implemented tasks.
+The document is divided in four main sections: one for general considerations applicable to all projects; and other three sections, each on dedicated to each of the tasks to be implemented. 
+
+All sections have the same structure:
+- 1 **Assumptions and Decisions made** --> Technical overview of the solution
+- 2 **Technical choices** --> third-party libraries used
+- 3 **Room for improvement** --> points where the solution can be improved
+- 4 **Instructions** --> instructions on how to run the solution and its tests
 
 General Considerations
 ======================
@@ -23,7 +29,7 @@ As Robert C. Martin said:
 
 In order to achieve code that is easy to read and follow, all functionality has been implemented in methods which are short, well named, and nicely organized. For private methods where the code should be expressive and clear enough, comments have not been added. Also a Eclipse format template has been created in order to get easily a nice format of the code which is applied all across the code solution.
 
-Solution structure
+Assumptions and Decisions made
 ------------------
 
 The three tasks have been implemented under the same repository but in different Java projects. The relation of projects with the tasks that they implement is as follows
@@ -42,8 +48,8 @@ Technical choices
 -----------------
 
 - **Eclipse Oxygen** as IDE. 
-- **Maven** as dependency and build life cycle management tool. 
-- **Junit** 4 as unit test framework.
+- **Maven 3** as dependency and build life cycle management tool. 
+- **Junit 4** as unit test framework.
 - **Mockito** as mocking framework.
 - **JCIP** for concurrent annotation.
 - **GIT** as control version tool. 
