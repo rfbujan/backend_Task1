@@ -115,9 +115,9 @@ The original interface suggested by the assessment has been splitted in three in
  	- `<UserToken requestToken(Credentials credentials)>`: synchronous implementation where clients need to wait for the token to be returned
  	- `<CompletableFuture<UserToken> requestTokenAsync(Credentials credentials)>`: Asynchronous implementation where clients don't need to wait for the token to be returned.
  	
-The original interface, suggested in the assessment, has been splitted in three interface in order to follow the Single Responsibility Principle (SRP) which states that a class or module should have one, and only one, reason to change. Class should have one responsibility. 
+The original interface, suggested in the assessment, has been splitted in three interface in order to follow the Single Responsibility Principle (SRP) which states that a class or module should have one, and only one, reason to change. Class should have one responsibility.   
 
-As suggested, both implementations of *requestToken* have been designed in terms of *authentificate* and *issueToken*. This way, who ever implements the services will only need to implement the interfaces `TokenAuthenticator` and `TokenCreator` which contain the methods `User authenticate(Credentials credentials)` and `UserToken issueToken(User user) ` respectively. 
+As suggested, both implementations of *requestToken* have been designed in terms of *authentificate* and *issueToken*. This way, who ever implements the services will only need to implement the interfaces `TokenAuthenticator` and `TokenCreator` which contain the methods `User authenticate(Credentials credentials)` and `UserToken issueToken(User user) ` respectively. The  `rfbujan.backend_taks1.token_provider.TokenProviderTask1.java class` implements these two methods
 
 The non-blocking nature of the `CompletableFuture<UserToken> requestToken(Credentials credentials)` is provided by the *CompletableFeature* added in Java 8 (as suggested in the assessment). For doing that, the asynchronous *requestToken* method makes use of the *supplyAsync* factory method which accepts a *Supplier* as argument and returns a *CompletableFuture* that will be asynchronously completed with the value obtained by invoking that *Supplier*. This *Supplier* will be run by one of the *Executors* in the *ForkJoinPool*.   
 
