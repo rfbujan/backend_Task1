@@ -266,17 +266,19 @@ For running unit tests:
 REST API
 ========
 
-The solution for this task is implemented by a single Java Project called *task3_token_rest_service* which re-uses the modules implemented in the task2. this project is wrapped in a maven arifact (*token-rest-service*) and it declared under the profile *task3* in the main pom file, which also includes the modules from task2.
+The solution for this task is implemented by a single Java Project called *task3_token_rest_service* which re-uses the modules implemented in the task2. this project is wrapped in a maven arifact (*token-rest-service*) and it is declared under the profile *task3* in the main pom file, which also includes the modules from task2.
 
 As requested in the assesment, this project defines a simple REST API to offer the functionality of the **SimpleAsyncTokenService** implemented in the previous task.
 
 Assumptions and Decisions made
 ------------------------------
 
-In this task the REST API makes use of the GET http method for requesting a new token from credentials provided (i.e. username and password). Username and password are provided as string parameters in the http request. 
+In this task the REST API makes use of HTTP method GET for requesting a new token from credentials provided (i.e. username and password). Username and password are provided as string parameters in the http request. 
 ```
 http://localhost:8080/token?username=perro&password=PERRO
 ```
+*NOTICE:* *localhost* can be replaced by the IP of the machine hosting the application
+
 If the credentials authorization is performed successfully then a JSON file is return with the token value (created by the *token-creator* module) and a boolean flag indicating that the token is valid. 
 ```
 {"token":"perro_2018-03-06T14:02:54.856Z","valid":true}
@@ -285,23 +287,36 @@ If the credentials authorization does not succeed then the service return a JSON
 ```
 {"token":"invalid_2018-03-06T14:07:34.704Z","valid":false}
 ```
-The project is quite simple. The application uses Spring Boot and it is formed by two main classses: `TokenServiceApplication`and `TokenServiceController`. The former is the main entry-point of the application. the latter exposes the annotated bean's method as HTTP endpoints.  `TokenServiceController` contains a single method *requestToken* that wraps the *resquestToken* method implemented for task2. 
-Spring Boot framework takes care of pretty much everything and for this reason no unit tests are provided in this solution. This project contains an integration test that makes sure that the whole solution work as expected together (including task2 solution).
+The project is quite simple. The application uses Spring Boot and it is formed by two main classses: `TokenServiceApplication`and `TokenServiceController`. The former is the main entry-point of the application. the latter exposes the annotated bean's method as HTTP endpoints.  `TokenServiceController` contains a single method *requestToken* that wraps the *resquestToken* method implemented for task2 by the `SimpleAsyncTokenService` class.
+
+Spring Boot framework takes care of pretty much everything and for this reason no unit tests are provided in this solution. This project contains an integration test that makes sure that the whole solution works as expected (including task2 solution).
 
 Technical choices
 -----------------
 
 - **Spring Boot** from creating REST Web service
-### Room for improvement
-- **Creation of Service Objects:** the *SimpleAsyncTokenService* is created in situ with the other two services (as can be seen below). This could be improve with a Factory for each of the services. This will encampsulate the creaton of this objects and will help to maintain the system in case of (in hypothetical future) new families of of the three services are created. 
+
+Room for improvement
+--------------------
+
+- **Creation of Service Objects:** the `TokenServiceController` class creates the *SimpleAsyncTokenService* in situ with the other two services (as can be seen below). This could be improved with a Factory for each of the services. This will encampsulate the creaton of this objects and will help to maintain the system in case of (in hypothetical future) new families of the three services are created. 
 ```java
 private final TokenProvider simpleAsyncTokenProvider = new SimpleAsyncTokenService(new TokenCreatorWithRandomDelay(), new TokenAuthenticatorRandomDelay());
 ```
 Instructions
 ------------
+For this task there is an actual application to be run!! 
 
-For this task there is an actual application to be run!! This application can be run by using the maven command ` mvn spring-boot:run'. Once the application is running then it can be tested using localhost (as IP) and the 8080 port (used by default in Tomcat). In the command shell should be something like the image *SpringBootConsole* stored in this repository. Also the port on which Tomcat is stated can be checked. 
+For running the REST API implemented as part of task3 using the maven plugin:
+- `cd task3_token_rest_service` (assuming that the current location is the main repository folder)
+-  `mvn spring-boot:run`
 
-As explained before, this task does not provide unit tests, but still the unit test (on which this solution depends) can be run through maven with the command `mvn -Ptask3 clean install` or simply by calling `mvn -Ptask3 test`.
+For running the REST API as a Packaged Application: 
+- `mvn -Ptask3 clean install`
+- `java -jar task3_token_rest_service/target/token-rest-service-0.0.1-SNAPSHOT.jar`
+
+Once the application is running then it can be tested using localhost (or IP of the hosting machine) and the 8080 port (used by default in Tomcat).  
+
+As explained before, this task does not provide unit tests, but still the unit test (on which this solution depends) can be run through maven with the command `mvn -Ptask3 test`.
 
 Integration tests can be run with the command `mvn -Ptask3 failsafe:integration-test`. In this case, the profile is not really necessary since there are no other integration tests in the solution. 
