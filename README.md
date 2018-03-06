@@ -15,6 +15,11 @@ All sections have the same structure:
 - 3 **Room for improvement** --> points where the solution can be improved
 - 4 **Instructions** --> instructions on how to run the solution and its tests
 
+**IMPORTANT:** for downloding, compile and run the application the following tools are needed:
+- GIT
+- maven 3
+- Java 8
+
 General Considerations
 ======================
 
