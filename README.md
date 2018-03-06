@@ -48,7 +48,11 @@ The three tasks have been implemented under the same repository but in different
 	* task2_token_provider
   3. task3 (REST API)
   	* task3_token_rest_service
-	
+
+The dependencies and build life-cycle for all three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
+
+In addition, the parent maven pom defines three profiles (task1, task2 and task3), which allows to govern the different solutions for each task independently. (e.g. `mvn -Ptask2 clean install` ) will only affect to the projects that forms the solution for the task 2.
+
 Technical choices
 -----------------
 
@@ -76,9 +80,7 @@ This git command will create a folder called *backend_technical_test* which cont
 
 The dependencies as build life-cycle for all three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
 
-For running tests, `mvn test` will run all unit tests and `mvn failsafe:integration-test` will run the integration tests. 
-
-In addition, the parent maven pom defines three profiles (task1, task2 and task3), which allows to govern the different solutions for each task independently. (e.g. `mvn -Ptask2 clean install` ) will only affect to the projects that forms the solution for the task 2.   
+For running tests, `mvn test` will run all unit tests and `mvn failsafe:integration-test` will run the integration tests.   
 
 
 Service Trait / Interface
