@@ -40,14 +40,14 @@ Assumptions and Decisions made
 The three tasks have been implemented under the same repository but in different Java projects. The relation of projects with the tasks that they implement is as follows
 
   1. task1 (service interface)
-  	* task1_token_service
+   - task1_token_service
   2. task2 (Service Implementation)
-	* task2_common
-	* task2_authenticator
-	* task2_token_creator
-	* task2_token_provider
+   - task2_common
+   - task2_authenticator
+   - task2_token_creator
+   - task2_token_provider
   3. task3 (REST API)
-  	* task3_token_rest_service
+   - task3_token_rest_service
 
 The dependencies and build life-cycle for all three solutions (5 projects) are governed by Maven. There is a parent maven pom file that defines the different implemented modules. Therefore the build life-cycle of all 5 projects can be managed from the main repository folder using the different maven goals (e.g. `mvn clean install` will build and install all artifacts used by the projects into the local repository ). 
 
@@ -68,8 +68,9 @@ Room for improvement
 
 There is room for improvement in different parts of the solution. Here are only listed some of the improvements that applies to all three solutions. Additional improvements will be commented for a particular task in its corresponding section.
 
-- **Logging mechanism:** Logging framework (such as log4j) that records different levels of relevant events that takes place in a operating system. 
-- **Code coverage tool:** Coverage tools (such as sonarQ) report gaps in your testing strategy. They make it easy to find modules, classes, and functions that are insufficiently tested. 
+- **Logging mechanism:** The solution does not user any Logging framework (such as log4j) that records different levels of relevant events that takes place in the running system. This framework are very useful for the maintenance of the application.
+
+- **Code coverage tool:** No code coverage tool has been used. A coverage tools (such as sonarQ) report gaps in your testing strategy. They make it easy to find modules, classes, and functions that are insufficiently tested. 
 
 Instructions 
 ------------
