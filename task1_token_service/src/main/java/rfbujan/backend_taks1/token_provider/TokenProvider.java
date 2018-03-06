@@ -6,7 +6,7 @@ import rfbujan.backend_taks1.model.Credentials;
 import rfbujan.backend_taks1.model.UserToken;
 
 /**
- * Token provider that allows requests for a user token based on given credentials.
+ * Token provider that allows requests for requesting a user token based on given credentials.
  * <p>
  *This token provider contemplates two implementations of user token requests:
  * <ul>
